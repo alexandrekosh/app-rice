@@ -9,6 +9,10 @@ function createNewRide() {
     return rideID
 }
 
+function getAllRides(){
+    return Object.entries(localStorage)
+}
+
 function getRideRecord(rideID) {
     return JSON.parse(localStorage.getItem(rideID))
 }
