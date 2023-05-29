@@ -22,9 +22,14 @@ allRides.forEach(async ([id, value]) => {
     const distanceDiv = document.createElement('div')
     distanceDiv.innerText = `Distance: ${getDistance(ride.data)}`
 
+    const durationDiv = document.createElement('div')
+    durationDiv.innerText = getDuration(ride)
+
     itemElement.appendChild(cityDiv)
     itemElement.appendChild(maxSpeedDiv)
     itemElement.appendChild(distanceDiv)
+    itemElement.appendChild(durationDiv)
+
     listRideElement.appendChild(itemElement)
 });
 
@@ -74,4 +79,18 @@ function getDistance(positions) {
     }
 
     return totalDistance.toFixed(2)
+}
+
+function getDuration(ride) {
+
+    function format(number, digits) {
+        return String(number.toFixed(0)).padStart(2,"0")
+    }
+
+    const interval = (ride.stopTime - ride.startTime) / 1000
+
+    const minutes = Math.trunc(interval / 60)
+    const seconds = interval % 60
+    
+    return `${format(minutes, 2)}:${format(seconds, 2)}`
 }
