@@ -12,27 +12,41 @@ allRides.forEach(async ([id, value]) => {
 
     const itemElement = document.createElement('li');
     itemElement.id = ride.id; //adidiona o id como ride.id
+    itemElement.className = "d-flex p-1 align-items-center shadow-sm justify-content-between gap-3"
+
+    const mapElement = document.createElement('div')
+    mapElement.style = "width:100px; height:100px;"
+    mapElement.classList.add("bg-secondary")
+
+    const dataElement = document.createElement('div')
+    dataElement.className = "flex-fill d-flex flex-column"
     
     const cityDiv = document.createElement("div")
     cityDiv.innerText = `City: ${firstLocationData.city} - ${firstLocationData.countryCode}`
+    cityDiv.className = "text-primary mb-2"
 
     const maxSpeedDiv = document.createElement('div')
     maxSpeedDiv.innerText = `Max Speed: ${getMaxSpeed(ride.data)}`
+    maxSpeedDiv.className = "h5"
 
     const distanceDiv = document.createElement('div')
     distanceDiv.innerText = `Distance: ${getDistance(ride.data)}`
 
     const durationDiv = document.createElement('div')
-    durationDiv.innerText = getDuration(ride)
-
+    durationDiv.innerText = `Duration: ${getDuration(ride)}`
+    
     const dateDiv = document.createElement('div')
     durationDiv.innerText = getStartDate(ride)
+    dateDiv.className = "text-secondary mt-2"
 
-    itemElement.appendChild(cityDiv)
-    itemElement.appendChild(maxSpeedDiv)
-    itemElement.appendChild(distanceDiv)
-    itemElement.appendChild(durationDiv)
-    itemElement.appendChild(dateDiv)
+    dataElement.appendChild(cityDiv)
+    dataElement.appendChild(maxSpeedDiv)
+    dataElement.appendChild(distanceDiv)
+    dataElement.appendChild(durationDiv)
+    dataElement.appendChild(dateDiv)
+
+    itemElement.appendChild(mapElement)
+    itemElement.appendChild(dataElement)
 
     listRideElement.appendChild(itemElement)
 });
@@ -101,16 +115,13 @@ function getDuration(ride) {
 
 function getStartDate(ride) {
     const d = new Date(ride.startTime)
-
-
+    
     const day = d.toLocaleString("en-US", {day: "numeric"})
     const month =  d.toLocaleString("en-US", {month: "long"})
     const year = d.toLocaleString("en-US", {year: "numeric"})
 
     const hour =  d.toLocaleString("en-US", {hour: "2-digit", hour12: false})
     const minute = d.toLocaleString("en-US", {minute: "2-digit"})
-
-
 
     return `${hour}:${minute} - ${month} ${day}, ${year} `
 }
