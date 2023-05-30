@@ -7,12 +7,13 @@ allRides.forEach(async ([id, value]) => {
     const ride = JSON.parse(value)
     ride.id = id
 
-    const firstPosition = ride.data[0]
-    const firstLocationData =  await getLocationData(firstPosition.latitude, firstPosition.longitude);
-
     const itemElement = document.createElement('li');
     itemElement.id = ride.id; //adidiona o id como ride.id
     itemElement.className = "d-flex p-1 align-items-center shadow-sm justify-content-between gap-3"
+    listRideElement.appendChild(itemElement)
+
+    const firstPosition = ride.data[0]
+    const firstLocationData =  await getLocationData(firstPosition.latitude, firstPosition.longitude);
 
     const mapElement = document.createElement('div')
     mapElement.style = "width:100px; height:100px;"
@@ -47,8 +48,6 @@ allRides.forEach(async ([id, value]) => {
 
     itemElement.appendChild(mapElement)
     itemElement.appendChild(dataElement)
-
-    listRideElement.appendChild(itemElement)
 });
 
 async function getLocationData(latitude, longitude) {
@@ -102,12 +101,13 @@ function getDistance(positions) {
 function getDuration(ride) {
 
     function format(number, digits) {
-        return String(number.toFixed(0)).padStart(2,"0")
+        return String(number.toFixed(0)).padStart(2, "0")
     }
 
     const interval = (ride.stopTime - ride.startTime) / 1000
 
     const minutes = Math.trunc(interval / 60)
+    
     const seconds = interval % 60
     
     return `${format(minutes, 2)}:${format(seconds, 2)}`
